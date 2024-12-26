@@ -1,6 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 
+import { connectDB } from "./config/db.js";
+
 import userRoutes from "./routes/user.Routes.js"
 import adminRoutes from "./routes/admin.Routes.js"
 import authRoutes from "./routes/auth.Routes.js"
@@ -27,4 +29,5 @@ app.get("/",(req,res)=>{
 
 app.listen(port,()=>{
     console.log(`server is started at http://localhost:${port}/`);
+    connectDB();
 })
