@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-
+import { clerkMiddleware } from "@clerk/express";
 import { connectDB } from "./config/db.js";
 
 import userRoutes from "./routes/user.Routes.js"
@@ -13,6 +13,8 @@ import statsRoutes from "./routes/stats.Routes.js"
 const app = express();
 dotenv.config();
 
+app.use(express.json());
+app.use(clerkMiddleware());
 
 let port = process.env.port;
 
