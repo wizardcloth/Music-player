@@ -31,3 +31,5 @@ app.listen(port,()=>{
     console.log(`server is started at http://localhost:${port}/`);
     connectDB();
 })
+
+
