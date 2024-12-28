@@ -1,5 +1,6 @@
 import { clerkClient } from "@clerk/express";
-
+import dotenv from "dotenv";
+dotenv.config();
 export const protectRoute = async (req, res, next) => {
     if(!req.auth.userId){
         return res.status(401).json({message: "Unauthorized"});
@@ -16,6 +17,7 @@ export const Admin = async (req, res, next) => {
         }
         next();
     } catch (error) {
-        return res.status(500).json({message: "Something went wrong"});
+        console.log(error);
+        next(error);
     }
 }
