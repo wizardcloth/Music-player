@@ -4,8 +4,9 @@ export const authcallback = async (req, res) => {
     try {
         const { id, firstName, lastName, imageUrl } = req.body;
         //check if user already exists
+        // console.log(id,firstName, lastName, imageUrl);
         const user = await User.findOne({ clerkId : id });
-
+        // console.log(user);
         if (!user) {
             //signup
             await User.create({
@@ -19,6 +20,7 @@ export const authcallback = async (req, res) => {
             //     clerkId,
             // });
             // await newUser.save();
+            console.log("User created successfully");
         }
         res.status(201).json({ message: "User created successfully" });
     } catch (error) {

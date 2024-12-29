@@ -4,6 +4,7 @@ import { clerkMiddleware } from "@clerk/express";
 import { connectDB } from "./config/db.js";
 import fileUpload from "express-fileupload";
 import path from "path";
+import cors from "cors";
 
 import userRoutes from "./routes/user.Routes.js"
 import adminRoutes from "./routes/admin.Routes.js"
@@ -25,6 +26,12 @@ app.use(fileUpload({
     createParentPath:true,
     limits: { fileSize: 10 * 1024 * 1024 }, //10mb
 }));
+app.use(cors(
+    {
+        origin: "http://localhost:5173",
+        credentials:true
+    }
+));
 
 let port = process.env.port;
 
