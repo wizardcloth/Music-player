@@ -1,6 +1,5 @@
 import express from "express";
 import dotenv from "dotenv";
-import { clerkMiddleware } from "@clerk/express";
 import { connectDB } from "./config/db.js";
 import fileUpload from "express-fileupload";
 import path from "path";
@@ -19,7 +18,6 @@ dotenv.config();
 
 //middleware
 app.use(express.json());
-app.use(clerkMiddleware());
 app.use(fileUpload({
     useTempFiles : true,
     tempFileDir : path.join(__dirname,"tmp"),
@@ -29,7 +27,7 @@ app.use(fileUpload({
 app.use(cors(
     {
         origin: "http://localhost:5173",
-        credentials:true
+        credentials:true,
     }
 ));
 
@@ -39,7 +37,7 @@ app.use("/api/users",userRoutes);
 app.use("/api/admin",adminRoutes);
 app.use("/api/auth",authRoutes);
 app.use("/api/songs",songsRoutes);
-app.use("/api/album",albumRoutes);
+app.use("/api/albums",albumRoutes);
 app.use("/api/stats",statsRoutes);
 
 //error handler

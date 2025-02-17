@@ -1,24 +1,28 @@
-import { useSignIn } from "@clerk/clerk-react"
-import { Button } from "./ui/button"
-const SignINAuthButton = () => {
-    const { signIn, isLoaded } = useSignIn();
-    if (!isLoaded) return null;
+import { useSignInWithGoogle } from "react-firebase-hooks/auth";
+import { auth } from "../lib/firebase";
+import { Button } from "./ui/button";
+import { Loader } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
+const SignInAuthButton = () => {
+    const [signInWithGoogle ,, loading] = useSignInWithGoogle(auth);
+    const navigate = useNavigate();
 
-    const signInwithGoogle = async () => {
-        signIn.authenticateWithRedirect(
-            {
-                strategy: "oauth_google",
-                redirectUrl: "/sso-callback",
-                redirectUrlComplete: "/authcallback"
-            }
-        )
-    }
+    const handleSignIn = async () => {
+        await signInWithGoogle();
+        navigate("/authcallback"); // Ensure the user is redirected to AuthCallback
+    };
+
     return (
-        <Button onClick={signInwithGoogle} className="w-full  bg-gray-400 border-zinc-400 h-11" variant={"secondary"}>
-            Continue with Google
+        <Button
+            onClick={handleSignIn}
+            disabled={loading}
+            className="w-full bg-gray-400 border-zinc-400 h-11"
+            variant="secondary"
+        >
+            {loading ? <Loader className="size-5 animate-spin" /> : "Continue with Google"}
         </Button>
-    )
-}
+    );
+};
 
-export default SignINAuthButton
+export default SignInAuthButton;

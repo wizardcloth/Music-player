@@ -1,18 +1,20 @@
-import './App.css'
-import { Route, Routes } from 'react-router-dom'
-import Homepage from './pages/home/homepage.tsx';
-import Authcallback from './pages/authCallback/authCallback.tsx';
-import { AuthenticateWithRedirectCallback } from '@clerk/clerk-react';
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import Homepage from "./pages/home/homepage.tsx";
+import AuthCallback from "./pages/authCallback/authCallback.tsx";
+import MainLayout from "./pages/mainLayout/mainLayout.tsx";
+import ChatPage from "./pages/chatPage/chatPage.tsx";
+
 function App() {
   return (
-    <>
-      <Routes>
+    <Routes>
+      <Route path="/authcallback" element={<AuthCallback />} />
+      <Route  element={<MainLayout/>}>
         <Route path="/" element={<Homepage />} />
-        <Route path="/sso-callback" element={<AuthenticateWithRedirectCallback signUpForceRedirectUrl={"/authcallback"} />} />
-        <Route path="/authcallback" element={<Authcallback />} />
-      </Routes>
-    </>
-  )
+        <Route path="/chat" element={<ChatPage/>} />
+      </Route>
+    </Routes>
+  );
 }
 
-export default App
+export default App;

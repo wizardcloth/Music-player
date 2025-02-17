@@ -1,19 +1,21 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
-    fullName: {
-        type: String,
-        required: true
+const userSchema = new mongoose.Schema(
+    {
+        fullName: {
+            type: String,
+            required: true
+        },
+        imageUrl: {
+            type: String,
+            required: true,
+        },
+        firebaseUID: { // Replacing clerkId with Firebase UID
+            type: String,
+            required: true,
+        },
     },
-    imageUrl: {
-        type:String,
-        required: true,
-    },
-    clerkId:{
-        type: String,
-        required: true,
-        unique: true,
-    },
-},{timestamps: true});
+    { timestamps: true }
+);
 
-export const User = mongoose.model('User', userSchema);
+export const User = mongoose.model("User", userSchema);

@@ -1,34 +1,35 @@
 import { LayoutDashboardIcon } from "lucide-react";
-import { SignedIn,SignedOut, SignOutButton } from "@clerk/clerk-react";
-import SignINAuthButton from "./SignINAuthButton";
-const topbar = () => {
-    const isAdmin = false;
-  return (
-    <div className="flex justify-between items-center h-16 bg-gray-800 text-white backdrop:blur-md ">
-        <div className="flex gap-2 items-center m-4">
-            Spotify
-        </div>
-        <div className="flex gap-2 items-center m-4">
-            {
-                isAdmin && (
-                    <div className="flex gap-2 items-center">
-                        <div className="flex gap-2 items-center">
-                            <LayoutDashboardIcon className="size-4 mr-2"/>
-                            <a href="/admin" className="hover:underline">Admin Dashboard</a>
-                        </div>
-                    </div>
-                )
-            }
-            <SignedIn>
-                <SignOutButton/>
-            </SignedIn>
-                
-            <SignedOut>
-                <SignINAuthButton/>
-            </SignedOut>
-        </div>
-    </div>
-  )
-}
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../lib/firebase";
+import { signOut } from "firebase/auth";
+import SignInAuthButton from "./SignINAuthButton.tsx";
 
-export default topbar
+const Topbar = () => {
+    const [user, loading] = useAuthState(auth);
+    const isAdmin = false; // Update this logic as needed
+
+    return (
+        <div className="flex justify-between items-center h-16 bg-zinc-800 m-2 rounded text-white backdrop:blur-md">
+            <div className="flex gap-2 items-center m-4">Spotify</div>
+            <div className="flex gap-2 items-center m-4">
+                {isAdmin && (
+                    <div className="flex gap-2 items-center">
+                        <LayoutDashboardIcon className="size-4 mr-2" />
+                        <a href="/admin" className="hover:underline">Admin Dashboard</a>
+                    </div>
+                )}
+                {loading ? (
+                    <span className="text-sm">Loading...</span>
+                ) : user ? (
+                    <button onClick={() => signOut(auth)} className="text-sm hover:underline">
+                        Sign Out
+                    </button>
+                ) : (
+                    <SignInAuthButton />
+                )}
+            </div>
+        </div>
+    );
+};
+
+export default Topbar;
