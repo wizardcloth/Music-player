@@ -1,24 +1,26 @@
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useEffect} from "react";
-import { auth } from "../lib/firebase.ts"; // Import Firebase auth instance
+import { useEffect } from "react";
+import { auth } from "../lib/firebase.ts";
 import axiosInstance from "../lib/axios";
 import { Loader } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-const updateApiToken = async (user: any) => {
-    if (user) {
-        const token = await user.getIdToken();
-        axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    } else {
-        delete axiosInstance.defaults.headers.common['Authorization'];
-    }
-};
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, loading] = useAuthState(auth);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        updateApiToken(user);
-    }, [user]);
+        // Listen for token refresh
+        const unsubscribe = auth.onIdTokenChanged(async (user) => {
+            if (user) {
+                const token = await user.getIdToken(true);
+                axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            }
+        });
+
+        return () => unsubscribe(); // Cleanup listener on unmount
+    }, [user, navigate]);
 
     if (loading) {
         return (
@@ -28,7 +30,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         );
     }
 
-    return <div>{children}</div>;
+    return <>{children}</>;
 };
 
 export default AuthProvider;

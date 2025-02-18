@@ -5,6 +5,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
 import Leftsidebar from "./components/leftsidebar";
+import RightBar from "./components/rightBar";
 function mainLayout() {
   const ismobile = false;
   return (
@@ -20,7 +21,7 @@ function mainLayout() {
         </ResizablePanel>
         <ResizableHandle className="w-1 bg-black" />
         <ResizablePanel defaultSize={20} maxSize={25} minSize={0} collapsedSize={0}>
-          right bar
+          <RightBar/>
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>

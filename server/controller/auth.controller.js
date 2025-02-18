@@ -8,7 +8,7 @@ export const authCallback = async (req, res) => {
         let user = await User.findOne({ firebaseUID: id });
 
         if (user) {
-            console.log("User already exists:", user);
+            console.log("User already exists:");
         } else {
             user = await User.create({
                 firebaseUID: id,

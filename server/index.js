@@ -24,12 +24,11 @@ app.use(fileUpload({
     createParentPath:true,
     limits: { fileSize: 10 * 1024 * 1024 }, //10mb
 }));
-app.use(cors(
-    {
-        origin: "http://localhost:5173",
-        credentials:true,
-    }
-));
+app.use(cors({
+    origin: "http://localhost:5173", 
+    credentials: true,
+    allowedHeaders: ["Authorization", "Content-Type"]
+}));
 
 let port = process.env.port;
 

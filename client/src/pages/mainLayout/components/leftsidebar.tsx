@@ -12,11 +12,12 @@ function leftsidebar() {
     const { albums, fetchAlbums, isloading } = useMusicStore();
 
     useEffect(() => {
-        fetchAlbums()
-    }, [fetchAlbums])
+        if (user) fetchAlbums()
+    }, [fetchAlbums, user])
 
 
-    console.log({ albums });
+
+    // console.log({ albums });
 
     return (
 
@@ -55,26 +56,30 @@ function leftsidebar() {
                                 <span>Playlists</span>
                             </div>
                         </div>
-                        <ScrollArea className="h-[calc(100vh-300px)]">
-                            <div className="space-y-2">
-                                {
-                                    isloading ? (<PlaylistSkeleton />) : (
-                                        albums.map((album) => (
 
-                                            <Link to={`/albums/${album._id}`} key={album._id} className="flex items-center hover:bg-zinc-700 p-2 rounded-md gap-3 cursor-pointer">
-                                                <img src={album.imageUrl} alt={"img"} className="size-12 rounded-md object-cover flex-shrink-0 border border-zinc-200" />
-                                                <div className="flex-1 min-w-0 hidden md:block">
-                                                    <span className="ml-2 font-medium truncate">{album.title}</span>
-                                                    <p className="ml-2 text-sm truncate">Album &#x2022; {album.releaseYear}</p>
-                                                </div>
-                                            </Link>
+                        {
+                            (!user) ? ("please login") : (
+                                <ScrollArea className="h-[calc(100vh-300px)]">
+                                    <div className="space-y-2">
+                                        {
+                                            isloading ? (<PlaylistSkeleton />) : (
+                                                albums.map((album) => (
 
-                                        ))
-                                    )
-                                }
-                            </div>
+                                                    <Link to={`/albums/${album._id}`} key={album._id} className="flex items-center hover:bg-zinc-700 p-2 rounded-md gap-3 cursor-pointer">
+                                                        <img src={album.imageUrl} alt={"img"} className="size-12 rounded-md object-cover flex-shrink-0 border border-zinc-200" />
+                                                        <div className="flex-1 min-w-0 hidden md:block">
+                                                            <span className="ml-2 font-medium truncate">{album.title}</span>
+                                                            <p className="ml-2 text-sm truncate">Album &#x2022; {album.releaseYear}</p>
+                                                        </div>
+                                                    </Link>
+                                                ))
+                                            )
+                                        }
+                                    </div>
+                                </ScrollArea>
+                            )
+                        }
 
-                        </ScrollArea>
                     </div>
                 </div>
             </div>

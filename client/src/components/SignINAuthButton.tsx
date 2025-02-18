@@ -17,8 +17,8 @@ const SignInAuthButton = () => {
         <Button
             onClick={handleSignIn}
             disabled={loading}
-            className="w-full bg-gray-400 border-zinc-400 h-11"
-            variant="secondary"
+            className="w-full bg-emerald-600 border-zinc-400 h-11 hover:text-emerald-400 hover:underline underline-offset-2 "
+            variant="ghost"
         >
             {loading ? <Loader className="size-5 animate-spin" /> : "Continue with Google"}
         </Button>
