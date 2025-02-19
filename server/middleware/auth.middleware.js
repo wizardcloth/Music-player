@@ -2,41 +2,36 @@ import admin from "../firebaseAdmin.js";
 
 // Middleware to verify Firebase ID Token
 export const protectRoute = async (req, res, next) => {
-    // console.log("Received Authorization header:", req.headers.authorization); // Log the token
+  const token = req.headers.authorization?.split("Bearer ")[1]; // Extract token
 
-    const token = req.headers.authorization?.split(" ")[1];
+  try {
+    // Verify the Firebase ID token
+    const decodedToken = await admin.auth().verifyIdToken(token);
+    // console.log("Decoded Token:", decodedToken);
+    // const tokenExpiration = new Date(decodedToken.exp * 1000);
+    // console.log('Token expiration time:', tokenExpiration);
 
-    if (!token) {
-        console.log("No token found in request.");
-        return res.status(401).json({ message: "Unauthorized" });
-    }
-
-    try {
-        const decodedToken = await admin.auth().verifyIdToken(token);
-        // console.log("Decoded Token:", decodedToken); // Log decoded user info
-
-        req.user = decodedToken; // Attach user data to request object
-        
-        next();
-    } catch (error) {
-        console.error("Error verifying token:", error);
-        return res.status(401).json({ message: "Invalid or expired token" });
-    }
+    req.user = decodedToken; // Attach user data to the request object
+    console.log("User data:", req.user);
+    next(); // Continue to the next middleware or route handler
+  } catch (error) {
+    console.error("Error verifying token:", error);
+    return res.status(401).json({ message: "Invalid or expired token" });
+  }
 };
-
 
 // Admin Middleware (Only allows specific users)
 export const Admin = async (req, res, next) => {
-    try {
-        const user = await admin.auth().getUser(req.user.uid);
+  try {
+    const user = await admin.auth().getUser(req.user.uid);
 
-        if (user.email !== process.env.ADMIN_EMAIL) {
-            return res.status(403).json({ message: "Forbidden: Admin only" });
-        }
-
-        next();
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Server error" });
+    if (user.email !== process.env.ADMIN_EMAIL) {
+      return res.status(403).json({ message: "Forbidden: Admin only" });
     }
+
+    next(); // Proceed to the next middleware or route
+  } catch (error) {
+    console.error("Admin check error:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
 };

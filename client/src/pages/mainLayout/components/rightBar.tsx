@@ -9,9 +9,12 @@ function RightBar() {
     const [user] = useIdToken(auth);
 
     useEffect(() => {
-        if (user) fetchUsers()
-    }, [user])
-    // console.log(users)
+        if (user) {
+            fetchUsers();  // Fetch only if the user is authenticated
+        }
+    }, [user, fetchUsers]);
+    
+    console.log(users)
 
     return (
         <>
