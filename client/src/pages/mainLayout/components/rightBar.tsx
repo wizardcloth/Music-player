@@ -2,19 +2,20 @@ import { useChatStore } from "@/stores/chatStore"
 import { useEffect } from "react";
 import { useIdToken } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebase";
-import { HeadphonesIcon, Users } from "lucide-react";
+import { HeadphonesIcon, Users, Music } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 function RightBar() {
     const { users, fetchUsers } = useChatStore();
     const [user] = useIdToken(auth);
+    const isPlaying = true;
 
     useEffect(() => {
         if (user) {
             fetchUsers();  // Fetch only if the user is authenticated
         }
     }, [user, fetchUsers]);
-    
-    console.log(users)
+
+    // console.log(users)
 
     return (
         <>
@@ -27,13 +28,45 @@ function RightBar() {
                                 <div className='flex items-center gap-2'>
                                     <Users className='size-5 shrink-0' />
                                     <h2 className='font-semibold'>What they're listening to</h2>
+
                                 </div>
                             </div>
+                            <ScrollArea className="flex-1">
+                                <div className='flex flex-col gap-2 p-4'>
+                                    {
+                                        users.map((user: any) => (
+                                            <div key={user._id} className='flex items-center gap-2'>
+                                                <div className='relative'>
+                                                    <img
+                                                        src={user.imageUrl}
+                                                        alt={"image"}
+                                                        className='w-10 h-10 rounded-full'
+                                                    />
+                                                    <div
+                                                        className={`${isPlaying ? 'bg-emerald-500' : 'bg-zinc-800'
+                                                            } absolute bottom-0 right-0 w-3 h-3 border-2 border-zinc-900 rounded-full`}
+                                                    />
+
+                                                </div>
+                                                <div className='flex flex-col'>
+                                                    <h3 className='font-semibold text-white'>{user.fullName}</h3>
+                                                    {
+                                                        (!isPlaying) ? ( <p className="text-sm text-zinc-400">idle</p>) : (null) 
+                                                    }
+
+                                                </div>
+                                                <div className="text-zinc-400 flex items-center flex-col">
+                                                    {
+                                                        (isPlaying) ? (<Music className="size-3.5 text-emerald-300 " />) : (null)
+                                                    }
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+
+                            </ScrollArea>
                         </div>
-                        <ScrollArea className="flex-1"> 
-
-                        </ScrollArea>
-
                     </>
                 )
             }

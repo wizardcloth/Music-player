@@ -12,8 +12,8 @@ export const protectRoute = async (req, res, next) => {
     // console.log('Token expiration time:', tokenExpiration);
 
     req.user = decodedToken; // Attach user data to the request object
-    console.log("User data:", req.user);
-    next(); // Continue to the next middleware or route handler
+    // console.log("User data:", req.user);
+    next(); 
   } catch (error) {
     console.error("Error verifying token:", error);
     return res.status(401).json({ message: "Invalid or expired token" });

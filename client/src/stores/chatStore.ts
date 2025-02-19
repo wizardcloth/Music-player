@@ -1,33 +1,14 @@
-import axiosInstance from "@/lib/axios";
+// useChatStore.ts
 import { create } from "zustand";
-import { auth } from "@/lib/firebase";
+import { createHeader } from "@/AuthProvider/authProvider"; // import from the utility file
+import axiosInstance from "@/lib/axios";
+
 interface ChatStore {
     users: string[];
     isLoading: boolean;
     error: string | null;
-    fetchUsers: () => void;
+    fetchUsers: () => Promise<void>;
 }   
-const getUserToken = async () => {
-    const user = auth.currentUser;
-    if (!user) {
-        return null; // Return null if user is not authenticated
-    }
-    const token = await user.getIdToken();
-    return token;
-};
-
-const createHeader = async () => {
-    const token = await getUserToken();
-    
-    // console.log("Token:", token); // Add this line for debugging
-    const payloadHeader = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-    };
-    return payloadHeader;
-};
 
 export const useChatStore = create<ChatStore>((set) => ({
     users: [],
@@ -38,8 +19,7 @@ export const useChatStore = create<ChatStore>((set) => ({
         set({ isLoading: true, error: null });
         try {
             const header = await createHeader();
-            const response = await axiosInstance.get("/users",header);
-
+            const response = await axiosInstance.get("/users", header);
             set({ users: response.data });
         } catch (error: any) {
             set({ error: error.response?.data?.message || "Error fetching users" });

@@ -36,8 +36,7 @@ app.use(cors({
 
 // app.use(protectRoute);
 
-const port = process.env.PORT || 8080; // Default port fallback
-
+const port = process.env.PORT || 8080; 
 // Routes
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
@@ -48,7 +47,7 @@ app.use("/api/stats", statsRoutes);
 
 // Error handler
 app.use((err, req, res, next) => {
-  console.error("Server error:", err); // Debugging
+  console.error("Server error:", err); 
   return res.status(500).json({
     message: process.env.NODE_ENV === "production" ? "Internal server error" : err.message,
   });
