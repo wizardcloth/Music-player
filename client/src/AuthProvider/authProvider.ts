@@ -3,16 +3,16 @@ import { auth } from "@/lib/firebase";
 export const getUserToken = async () => {
     const user = auth.currentUser;
     if (!user) {
-        return null; // Return null if the user is not authenticated
+        return null; 
     }
-    const token = await user.getIdToken();
+    const token = await user.getIdToken(true);
     return token;
 };
 
 export const createHeader = async () => {
     const token = await getUserToken();
     if (!token) {
-        console.error("No token found. User is not authenticated.");
+        // console.error("No token found. User is not authenticated.");
         return {}; // Return empty headers if no token is found
     }
     

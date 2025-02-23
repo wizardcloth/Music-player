@@ -5,19 +5,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import PlaylistSkeleton from "@/components/skeletons/playlistSkeletons";
 import { useMusicStore } from "@/stores/musicStore"
-import { useEffect } from "react";
 
 function leftsidebar() {
     const [user] = useAuthState(auth);
-    const { albums, fetchAlbums, isloading } = useMusicStore();
-
-    useEffect(() => {
-        if (user) fetchAlbums()
-    }, [fetchAlbums, user])
-
-
-
-    // console.log({ albums });
+    const { albums, isloading } = useMusicStore();
 
     return (
 

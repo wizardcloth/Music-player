@@ -14,8 +14,7 @@ const Topbar = () => {
         if(user) {
             checkAdmin();
         }
-    }, [user]);
-
+    }, [user,checkAdmin]);
     return (
         <div className="flex justify-between items-center h-16 bg-zinc-800 m-2 rounded text-white backdrop:blur-md">
             <div className="flex gap-2 items-center m-4"><img src="/spotify.png" alt="" className="size-7 rounded-sm"/>Music</div>

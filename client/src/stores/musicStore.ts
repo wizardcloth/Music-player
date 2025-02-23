@@ -5,21 +5,30 @@ import axiosInstance from "../lib/axios";
 import { Album, Song } from "@/types";
 
 interface MusicStore {
-    music: Song[];
+    songs: Song[];
     albums: Album[];
     isloading: boolean;
     error: string | null;
     currentAlbum: null | Album;
+    featuredSongs: Song[];
+    MadeForYou: Song[];
+    TrendingSongs: Song[];
     fetchAlbums: () => Promise<void>;
     fetchAlbumsById: (albumId: string) => Promise<void>;
+    fetchfeaturedSongs: () => Promise<void>;
+    fetchMadeForYou: () => Promise<void>;
+    fetchTrendingSongs: () => Promise<void>;
 }
 
 export const useMusicStore = create<MusicStore>((set) => ({
-    music: [],
+    songs: [],
     albums: [],
     isloading: false,
     error: "null",
     currentAlbum: null,
+    featuredSongs:[],
+    MadeForYou:[],
+    TrendingSongs:[],
 
     fetchAlbums: async () => {
         set({ isloading: true });
@@ -45,5 +54,44 @@ export const useMusicStore = create<MusicStore>((set) => ({
         } finally {
             set({ isloading: false });
         }
-    }
+    },
+    fetchfeaturedSongs: async () => {
+        set({ isloading: true });
+        const header = await createHeader();
+        try {
+            const response = await axiosInstance.get("/songs/featured", header);
+            set({ featuredSongs: response.data });
+        } catch (error: any) {
+            console.log(error);
+        } finally {
+            set({ isloading: false });
+        }
+    },
+    fetchMadeForYou: async () => {
+        set({ isloading: true });
+        const header = await createHeader();
+        try {
+            const response = await axiosInstance.get("/songs/madeforyou", header);
+            set({ MadeForYou: response.data });
+        } catch (error: any) {
+            console.log(error);
+        } finally {
+            set({ isloading: false });
+        }
+
+    },
+    fetchTrendingSongs: async () => {
+        set({ isloading: true });
+        const header = await createHeader();
+        try {
+            const response = await axiosInstance.get("/songs/trending", header);
+            set({ TrendingSongs: response.data });
+        } catch (error: any) {
+            console.log(error);
+        } finally {
+            set({ isloading: false });
+        }
+
+    },
+
 }));

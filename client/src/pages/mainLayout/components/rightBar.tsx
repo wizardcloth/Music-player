@@ -2,17 +2,21 @@ import { useChatStore } from "@/stores/chatStore"
 import { useEffect } from "react";
 import { useIdToken } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebase";
-import { HeadphonesIcon, Users, Music } from "lucide-react";
+import { HeadphonesIcon, Users, Music,CircleUserRound} from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 function RightBar() {
     const { users, fetchUsers } = useChatStore();
+    
     const [user] = useIdToken(auth);
     const isPlaying = true;
 
     useEffect(() => {
-        if (user) {
-            fetchUsers();  // Fetch only if the user is authenticated
+        async function users() {
+            if (user) {
+               await fetchUsers();  
+            }
         }
+        users();
     }, [user, fetchUsers]);
 
     // console.log(users)
@@ -37,11 +41,7 @@ function RightBar() {
                                         users.map((user: any) => (
                                             <div key={user._id} className='flex items-center gap-2'>
                                                 <div className='relative'>
-                                                    <img
-                                                        src={user.imageUrl}
-                                                        alt={"image"}
-                                                        className='w-10 h-10 rounded-full'
-                                                    />
+                                                    <CircleUserRound className='w-10 h-10 rounded-full'/>
                                                     <div
                                                         className={`${isPlaying ? 'bg-emerald-500' : 'bg-zinc-800'
                                                             } absolute bottom-0 right-0 w-3 h-3 border-2 border-zinc-900 rounded-full`}
@@ -51,7 +51,7 @@ function RightBar() {
                                                 <div className='flex flex-col'>
                                                     <h3 className='font-semibold text-white'>{user.fullName}</h3>
                                                     {
-                                                        (!isPlaying) ? ( <p className="text-sm text-zinc-400">idle</p>) : (null) 
+                                                        (isPlaying) ? ( <p className="text-sm text-zinc-400">idle</p>) : (null) 
                                                     }
 
                                                 </div>

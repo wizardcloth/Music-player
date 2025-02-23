@@ -26,7 +26,7 @@ export const Admin = async (req, res, next) => {
     const user = await admin.auth().getUser(req.user.uid);
 
     if (user.email !== process.env.ADMIN_EMAIL) {
-      return res.status(403).json({ message: "Forbidden: Admin only" });
+      return res.json({ message: "Forbidden" });
     }
 
     next(); // Proceed to the next middleware or route
