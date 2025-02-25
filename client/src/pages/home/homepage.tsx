@@ -9,7 +9,7 @@ const homepage = () => {
   return (
     <div>
       <Topbar />
-      <ScrollArea className="h-[calc(100vh-180px)]">
+      <ScrollArea className="h-[calc(100vh-159px)]">
         <FeaturedSection />
         <div>
           <Sectiongrids title="Made for you" songs={MadeForYou} isLoading={isloading}/>

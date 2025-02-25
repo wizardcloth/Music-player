@@ -20,7 +20,7 @@ export const useAuthStore = create<Authstore>((set)=>({
             const response = await axiosInstance.get("/admin/check",header);
             set({isAdmin: response.data.admin});
         } catch (error:any) {
-            set({error: error.response.data.message ,isAdmin: false});
+            set({isAdmin: false});
         } finally {
             set({isloading: false});
         }

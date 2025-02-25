@@ -26,8 +26,8 @@ function RightBar() {
             {
                 (!user) ? (<LoginPrompt />) : (
                     <>
-
-                        <div className='h-full bg-zinc-900 rounded-lg flex flex-col'>
+                        
+                        <div className='h-[calc(100vh-85px)] m-2 bg-zinc-900 rounded-lg flex flex-col'>
                             <div className='p-4 flex justify-between items-center border-b border-zinc-800'>
                                 <div className='flex items-center gap-2'>
                                     <Users className='size-5 shrink-0' />
