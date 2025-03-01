@@ -12,7 +12,7 @@ export const formatDuration = (seconds: number) => {
 	return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`;
 };
 
-	const AlbumPage = () => {
+const AlbumPage = () => {
 	const { albumId } = useParams();
 	const { fetchAlbumsById, currentAlbum, isloading } = useMusicStore();
 	const { currentSong, isPlaying, playAlbum, togglePlay } = usePlayerStore();
@@ -47,7 +47,7 @@ export const formatDuration = (seconds: number) => {
 
 	return (
 		<div className='h-full'>
-			<ScrollArea className='h-full rounded-md'>
+			<ScrollArea className='h-[calc(100vh-100px)] rounded-md'>
 				{/* Main Content */}
 				<div className='relative min-h-full'>
 					{/* bg gradient */}
@@ -59,15 +59,15 @@ export const formatDuration = (seconds: number) => {
 
 					{/* Content */}
 					<div className='relative z-10'>
-						<div className='flex p-6 gap-6 pb-8'>
+						<div className='flex p-6 gap-6 pb-8 md:flex-row flex-col'>
 							<img
 								src={currentAlbum?.imageUrl}
 								alt={currentAlbum?.title}
-								className='w-[240px] h-[240px] shadow-xl rounded'
+								className='hidden md:block size-4 shadow-xl rounded md:w-full h-full max-w-[200px] max-h-[200px] object-cover'
 							/>
 							<div className='flex flex-col justify-end'>
 								<p className='text-sm font-medium'>Album</p>
-								<h1 className='text-7xl font-bold my-4'>{currentAlbum?.title}</h1>
+								<h1 className='text-5xl font-bold my-4'>{currentAlbum?.title}</h1>
 								<div className='flex items-center gap-2 text-sm text-zinc-100'>
 									<span className='font-medium text-white'>{currentAlbum?.artist}</span>
 									<span>• {currentAlbum?.songs.length} songs</span>

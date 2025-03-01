@@ -1,7 +1,7 @@
 import { Song } from "@/types";
 import SectionGridSkeleton from "@/components/skeletons/made.featured";
 import { Button } from "@/components/ui/button";
-// import PlayButton from "./PlayButton";
+import PlayButton from "./playbutton";
 
 type SectionGridProps = {
 	title: string;
@@ -35,7 +35,7 @@ const SectionGrid = ({ songs, title, isLoading }: SectionGridProps) => {
 									group-hover:scale-105'
 								/>
 							</div>
-							{/* <PlayButton song={song} /> */}
+							<PlayButton song={song} />
 						</div>
 						<h3 className='font-medium mb-2 truncate'>{song.title}</h3>
 						<p className='text-sm text-zinc-400 truncate'>{song.artist}</p>

@@ -14,13 +14,13 @@ function leftsidebar() {
 
         <>
             {/* navigation */}
-            <div className="h-full flex flex-col gap-2">
+            <div className="h-full flex flex-col gap-0">
                 <div className="bg-zinc-900 p-4 rounded m-2">
                     <div className="space-y-2">
                         <Link to={"/"}>
                             <div className="flex items-center hover:bg-zinc-700 p-2">
-                                <HomeIcon className="mr-2 size-5" />
-                                <span>Home</span>
+                                <HomeIcon className=" md:size-5 mr-2 " />
+                                <span className="hidden md:block">Home</span>
                             </div>
                         </Link>
 
@@ -28,9 +28,9 @@ function leftsidebar() {
                             <Link to={"/chat"} >
                                 {
                                     user && (
-                                        <div className="flex items-center hover:bg-zinc-700   p-2">
-                                            <MessageCircle className="mr-2 size-5" />
-                                            <span>Message</span>
+                                        <div className="flex items-center  hover:bg-zinc-700   p-2">
+                                            <MessageCircle className="md:size-5 mr-2 " />
+                                            <span className="hidden md:block " >Message</span>
                                         </div>
                                     )
                                 }
@@ -39,12 +39,12 @@ function leftsidebar() {
                     </div>
                 </div>
                 {/* library */}
-                <div >
-                    <div className="flex-1 bg-zinc-900 p-4 rounded m-2">
+                <div className="h-[calc(100vh-185px)]">
+                    <div className="flex-1 bg-zinc-900  rounded m-2">
                         <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center text-white">
-                                <Library className="size-5 mr-2" />
-                                <span>Playlists</span>
+                                <Library className="hidden md:block size-5 m-2" />
+                                <span   className="text-sm md:text-base">Playlists</span>
                             </div>
                         </div>
 

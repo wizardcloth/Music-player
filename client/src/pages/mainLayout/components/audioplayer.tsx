@@ -2,7 +2,7 @@ import { usePlayerStore } from "@/stores/playerStore";
 import { useEffect, useRef } from "react";
 
 const AudioPlayer = () => {
-	const audioRef = useRef<HTMLAudioElement>(null);
+	const audioRef = useRef<HTMLAudioElement|null>(null);
 	const prevSongRef = useRef<string | null>(null);
 
 	const { currentSong, isPlaying, playNext } = usePlayerStore();
