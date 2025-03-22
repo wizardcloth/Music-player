@@ -20,7 +20,7 @@ const SignInAuthButton = () => {
             className="w-full bg-emerald-600 border-zinc-400 h-11 hover:text-emerald-400 hover:underline underline-offset-2 "
             variant="ghost"
         >
-            {loading ? <Loader className="size-5 animate-spin" /> : "Continue with Google"}
+            {loading ? <Loader className="size-5 animate-spin" /> : <span className="text-sm text-white font-bold">Sign In with Google</span>}
         </Button>
     );
 };

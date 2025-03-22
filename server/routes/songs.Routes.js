@@ -3,7 +3,7 @@ import { getAllSongs, getFeaturedSongs, getMadeForYouSongs, getTrendingSongs } f
 import { protectRoute, Admin } from "../middleware/auth.middleware.js";
 const router = Router();
 
-router.get("/", protectRoute, Admin, getAllSongs);
+router.get("/",protectRoute,Admin,getAllSongs);
 router.get("/featured", getFeaturedSongs);
 router.get("/madeforyou", getMadeForYouSongs);
 router.get("/trending", getTrendingSongs);

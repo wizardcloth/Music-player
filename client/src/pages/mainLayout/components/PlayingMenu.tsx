@@ -69,8 +69,9 @@ function PlayMenu() {
               size='icon'
               variant='ghost'
               className='hidden sm:inline-flex hover:text-white text-zinc-400'
+              name="shuffle"
             >
-              <Shuffle className='h-4 w-4' />
+              <Shuffle className='h-4 w-4'  />
             </Button>
 
             <Button
@@ -79,6 +80,7 @@ function PlayMenu() {
               className='hover:text-white text-zinc-400'
               onClick={playPrevious}
               disabled={!currentSong}
+              name="skipback"
             >
               <SkipBack className='h-4 w-4' />
             </Button>
@@ -88,6 +90,7 @@ function PlayMenu() {
               className='bg-white hover:bg-white/80 text-black rounded-full h-8 w-8'
               onClick={togglePlay}
               disabled={!currentSong}
+              name="playpause"
             >
               {isPlaying ? <Pause className='h-5 w-5' /> : <Play className='h-5 w-5' />}
             </Button>
@@ -97,6 +100,7 @@ function PlayMenu() {
               className='hover:text-white text-zinc-400'
               onClick={playNext}
               disabled={!currentSong}
+              name="skipforward"
             >
               <SkipForward className='h-4 w-4' />
             </Button>
@@ -104,6 +108,7 @@ function PlayMenu() {
               size='icon'
               variant='ghost'
               className='hidden sm:inline-flex hover:text-white text-zinc-400'
+              name="repeat"
             >
               <Repeat className='h-4 w-4' />
             </Button>
@@ -117,6 +122,7 @@ function PlayMenu() {
               step={1}
               className='w-full hover:cursor-grab active:cursor-grabbing'
               onValueChange={handleSeek}
+              name="slider"
             />
             <div className='text-xs text-zinc-400'>{formatTime(duration)}</div>
           </div>
@@ -125,7 +131,7 @@ function PlayMenu() {
         <div className='hidden sm:flex items-center gap-4 min-w-[10rem] justify-end'>
           
           <div className='flex items-center gap-2'>
-            <Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
+            <Button size='icon' variant='ghost' className='hover:text-white text-zinc-400' name="volume">
               <Volume1 className='h-4 w-4' />
             </Button>
 
@@ -134,6 +140,7 @@ function PlayMenu() {
               max={100}
               step={1}
               className='w-24 hover:cursor-grab active:cursor-grabbing'
+              name="volume slider"
               onValueChange={(value) => {
                 setVolume(value[0]);
                 if (audioRef.current) {

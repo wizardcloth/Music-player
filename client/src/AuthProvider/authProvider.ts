@@ -5,7 +5,7 @@ export const getUserToken = async () => {
     if (!user) {
         return null; 
     }
-    const token = await user.getIdToken(true);
+    const token = await user.getIdToken();
     return token;
 };
 
