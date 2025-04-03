@@ -53,6 +53,7 @@ export const createSong = async (req, res, next) => {
         if (albumId) {
             await Album.findByIdAndUpdate(albumId, { $push: { songs: song._id } });
         }
+        res.status(201).json("success");
     } catch (error) {
         console.log(error);
         next(error);
