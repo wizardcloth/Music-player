@@ -4,7 +4,7 @@ import { useMusicStore } from "@/stores/musicStore";
 import { Calendar, Music, Trash2 } from "lucide-react";
 
 const AlbumsTable = () => {
-	const { albums} = useMusicStore();
+	const { albums, deleteAlbum, isloading } = useMusicStore();
 
 
 	return (
@@ -44,7 +44,8 @@ const AlbumsTable = () => {
 								<Button
 									variant='ghost'
 									size='sm'
-									// onClick={() => deleteAlbum(album._id)}
+									onClick={() => deleteAlbum(album._id)}
+									disabled={isloading}
 									className='text-red-400 hover:text-red-300 hover:bg-red-400/10'
 								>
 									<Trash2 className='h-4 w-4' />

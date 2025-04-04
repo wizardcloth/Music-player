@@ -4,7 +4,7 @@ import { useMusicStore } from "@/stores/musicStore";
 import { Calendar, Trash2 } from "lucide-react";
 
 const SongsTable = () => {
-	const { songs, isloading, error } = useMusicStore();
+	const { songs, isloading, error ,deleteSong} = useMusicStore();
 	// console.log(songs);
 	if (isloading) {
 		return (
@@ -56,9 +56,10 @@ const SongsTable = () => {
 								<div className='flex gap-2 justify-end'>
 									<Button
 										variant={"ghost"}
-										size={"sm"}
+										size={"sm"}	
+										disabled={isloading}
 										className='text-red-400 hover:text-red-300 hover:bg-red-400/10'
-									// onClick={() => deleteSong(song._id)}
+									onClick={() => deleteSong(song._id)}
 									>
 										<Trash2 className='size-4' />
 									</Button>

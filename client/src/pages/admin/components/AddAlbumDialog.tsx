@@ -1,15 +1,18 @@
+import { createHeader } from "@/AuthProvider/authProvider";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import axiosInstance from "@/lib/axios";
 import { Plus, Upload } from "lucide-react";
 import { useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 function AddAlbumDialog() {
   const [albumDialogOpen, setalbumDialogOpen] = useState(false);
   const [isloading, setisloading] = useState(false);
   const fileInputref = useRef<HTMLInputElement>(null);
 
-  const [imagefile, setimagefile] = useState<File | null>(null);
+  const [imageFile, setimageFile] = useState<File | null>(null);
 
   const [newAlbum, setNewAlbum] = useState({
     title: '',
@@ -18,7 +21,37 @@ function AddAlbumDialog() {
   })
 
   const handleSubmit = async () => {
+    try {
+      setisloading(true);
+      if (!imageFile) return toast.error("Please select an image file");
+      if (!newAlbum.title || !newAlbum.artist || !newAlbum.releaseYear) return toast.error("Please fill all the fields");
 
+      const formData = new FormData();
+
+      formData.append("title", newAlbum.title);
+      formData.append("artist", newAlbum.artist);
+      formData.append("releaseYear", newAlbum.releaseYear.toString());
+      formData.append("imageFile", imageFile);
+      const header = await createHeader();
+
+      await axiosInstance.post("/admin/albums", formData, header);
+
+      setNewAlbum({
+        title: '',
+        artist: '',
+        releaseYear: new Date().getFullYear(),
+      })
+
+      setimageFile(null);
+      setalbumDialogOpen(false);
+      toast.success("Song added successfully");
+
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    } finally {
+      setisloading(false);
+    }
   }
 
   return (
@@ -42,7 +75,7 @@ function AddAlbumDialog() {
               className="hidden"
               ref={fileInputref}
               onChange={(e) => {
-                setimagefile(e.target.files![0]);
+                setimageFile(e.target.files![0]);
               }}
             />
 
@@ -52,10 +85,10 @@ function AddAlbumDialog() {
             >
               <div className="text-center">
                 {
-                  imagefile ? (
+                  imageFile ? (
                     <div className="space-y-4">
                       <div className='text-sm text-emerald-500'>Image selected:</div>
-                      <div className='text-xs text-zinc-400'>{imagefile.name.slice(0, 20)}</div>
+                      <div className='text-xs text-zinc-400'>{imageFile.name.slice(0, 20)}</div>
                     </div>
                   ) : (
                     <>
@@ -119,5 +152,4 @@ function AddAlbumDialog() {
     </Dialog>
   )
 }
-
 export default AddAlbumDialog

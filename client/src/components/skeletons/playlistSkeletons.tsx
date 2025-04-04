@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 export default function playlistSkeleton() {
     return (
-        Array(8).fill(0).map((_, i) => (
+        Array(4).fill(0).map((_, i) => (
             <div key={i} className="flex items-center space-x-4 rounded-md gap-3 p-2">
                 <Skeleton className="h-12 w-12 rounded-md" />
                 <div className="space-y-2 ">
