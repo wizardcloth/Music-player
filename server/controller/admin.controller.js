@@ -110,7 +110,7 @@ export const createAlbum = async (req, res, next) => {
         const imageFile = req.files.imageFile;
 
         const imageUrl = await uploadToCloudinary(imageFile);
-        console.log(imageUrl);  
+        // console.log(imageUrl);  
         let album = await Album.create({
             title:title,  //title:title or title only both means same
             artist:artist,

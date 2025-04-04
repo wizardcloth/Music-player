@@ -117,7 +117,7 @@ export const useMusicStore = create<MusicStore>((set) => ({
         if (!header) {
             return;
         }
-        console.log(header)
+        // console.log(header)
         try {
             const response = await axiosInstance.get("/stats", header);
             set({ stats: response.data });
