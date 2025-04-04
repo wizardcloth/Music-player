@@ -30,7 +30,7 @@ app.use(
 
 app.use(
   cors({
-    origin: "https://music-player-luk7-qgt1l6zpm-wizardcloths-projects.vercel.app", // Change to your frontend URL in production
+    origin: "https://music-player-luk7.vercel.app", // Change to your frontend URL in production
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
