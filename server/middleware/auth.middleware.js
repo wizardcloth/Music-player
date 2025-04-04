@@ -25,7 +25,7 @@ export const Admin = async (req, res, next) => {
   try {
     const user = await admin.auth().getUser(req.user.uid);
 
-    if (user.email !== process.env.ADMIN_EMAIL) {
+    if (user.email !== process.env.Admin_email) {
       return res.json({ message: "Forbidden" });
     }
 
