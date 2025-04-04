@@ -33,6 +33,12 @@ app.use(
     origin: "https://music-player-luk7.vercel.app", // Change to your frontend URL in production
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    AccessControlAllowCredentials: true,
+    AccessControlAllowOrigin: true,
+    AccessControlAllowMethods: "GET, POST, PUT, DELETE",
+    AccessControlAllowHeaders: "Content-Type, Authorization",
+    optionsSuccessStatus: 200,
+    preflightContinue: false,
     credentials: true,
   })
 );
