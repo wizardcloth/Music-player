@@ -34,7 +34,7 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     AccessControlAllowCredentials: true,
-    AccessControlAllowOrigin: true,
+    AccessControlAllowOrigin: "https://music-player-luk7.vercel.app",
     AccessControlAllowMethods: "GET, POST, PUT, DELETE",
     AccessControlAllowHeaders: "Content-Type, Authorization",
     optionsSuccessStatus: 200,
