@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 import fileUpload from "express-fileupload";
 import cors from "cors";
+import fs from "fs";
+import cron from "node-cron";
 
 // Importing routes
 import userRoutes from "./routes/user.Routes.js";
@@ -26,6 +28,21 @@ app.use(
     limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB
   })
 );
+const tempDir = path.join(process.cwd(), "tmp");
+cron.schedule("0 * * * *", () => {
+  if(fs.existsSync(tempDir)){
+    fs.readdir(tempDir,(err,files)=>{
+      if(err){
+        console.log(err);
+        return;
+      }
+      for(const file of files){
+        fs.unlink(path.join(tempDir,file),(err)=>{})
+      }
+    });
+  }
+})
+
 
 app.use(
   cors({
