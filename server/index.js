@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(
   fileUpload({
     useTempFiles: true,
-    tempFileDir: "tmp",
+    tempFileDir: '/tmp/',
     createParentPath: true,
     limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB
   })
