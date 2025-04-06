@@ -5,6 +5,7 @@ import fileUpload from "express-fileupload";
 import cors from "cors";
 import fs from "fs";
 import cron from "node-cron";
+import path from "path";
 
 // Importing routes
 import userRoutes from "./routes/user.Routes.js";
