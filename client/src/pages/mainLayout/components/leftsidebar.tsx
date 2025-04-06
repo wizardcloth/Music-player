@@ -14,64 +14,60 @@ function leftsidebar() {
 
         <>
             {/* navigation */}
-            <div className="h-full flex flex-col gap-0">
-                <div className="bg-zinc-900 p-4 rounded m-2">
+            <div className="h-[calc(100vh-75px)] flex flex-col gap-2">
+                <div className="bg-zinc-900 rounded ">
                     <div className="space-y-2">
                         <Link to={"/"}>
                             <div className="flex items-center hover:bg-zinc-700 p-2">
-                                <HomeIcon className=" md:size-5 mr-2 " />
-                                <span className="hidden md:block">Home</span>
+                                <HomeIcon className="size-8 sm:size-6 mr-2" />
+                                <span className="hidden sm:inline">Home</span>
                             </div>
                         </Link>
 
                         <div>
-                            <Link to={"/chat"} >
-                                {
-                                    user && (
-                                        <div className="flex items-center  hover:bg-zinc-700   p-2">
-                                            <MessageCircle className="md:size-5 mr-2 " />
-                                            <span className="hidden md:block " >Message</span>
-                                        </div>
-                                    )
-                                }
+                            <Link to={"/chat"}>
+                                {user && (
+                                    <div className="flex items-center hover:bg-zinc-700 p-2">
+                                        <MessageCircle className="size-8 sm:size-6 mr-2" />
+                                        <span className="hidden sm:inline">Message</span>
+                                    </div>
+                                )}
                             </Link>
                         </div>
                     </div>
                 </div>
-                {/* library */}
-                <div className="h-[calc(100vh-185px)]">
-                    <div className="flex-1 bg-zinc-900  rounded m-2">
-                        <div className="flex items-center justify-between mb-4">
-                            <div className="flex items-center text-white">
-                                <Library className="hidden md:block size-5 m-2" />
-                                <span   className="text-sm md:text-base">Playlists</span>
-                            </div>
+                {/* playlist */}
+                <div className='flex-1 rounded-lg bg-zinc-900 p-4'>
+                    <div className='flex items-center justify-between mb-4'>
+                        <div className='flex items-center text-white'>
+                            <Library className='hidden sm:inline' />
+                            <span className='size-8 sm:size-6 mr-2 font-medium'>Playlists</span>
                         </div>
-
-                        {
-                            (!user) ? ("please login") : (
-                                <ScrollArea className="h-[calc(100vh-300px)]">
-                                    <div className="space-y-2">
-                                        {
-                                            isloading ? (<PlaylistSkeleton />) : (
-                                                albums.map((album) => (
-
-                                                    <Link to={`/albums/${album._id}`} key={album._id} className="flex items-center hover:bg-zinc-700 p-2 rounded-md gap-3 cursor-pointer">
-                                                        <img src={album.imageUrl} alt={"img"} className="size-12 rounded-md object-cover flex-shrink-0 border border-zinc-200" />
-                                                        <div className="flex-1 min-w-0 hidden md:block">
-                                                            <span className="ml-2 font-medium truncate">{album.title}</span>
-                                                            <p className="ml-2 text-sm truncate">Album &#x2022; {album.releaseYear}</p>
-                                                        </div>
-                                                    </Link>
-                                                ))
-                                            )
-                                        }
-                                    </div>
-                                </ScrollArea>
-                            )
-                        }
-
                     </div>
+
+                    {
+                        (!user) ? ("please login") : (
+                            <ScrollArea className="h-[calc(100vh-300px)]">
+                                <div className="space-y-4">
+                                    {
+                                        isloading ? (<PlaylistSkeleton />) : (
+                                            albums.map((album) => (
+
+                                                <Link to={`/albums/${album._id}`} key={album._id} className="flex items-center hover:bg-zinc-700 rounded-md  cursor-pointer">
+                                                    <img src={album.imageUrl} alt={"img"} className="size-12 rounded-md object-cover border border-zinc-200" />
+                                                    <div className="flex-1 min-w-0 hidden md:block">
+                                                        <span className="ml-2 font-medium truncate">{album.title}</span>
+                                                        <p className="ml-2 text-sm truncate">Album &#x2022; {album.releaseYear}</p>
+                                                    </div>
+                                                </Link>
+                                            ))
+                                        )
+                                    }
+                                </div>
+                            </ScrollArea>
+                        )
+                    }
+
                 </div>
             </div>
         </>

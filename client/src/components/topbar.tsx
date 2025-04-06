@@ -18,8 +18,10 @@ const Topbar = () => {
     // const isAdmin = false;    // Update this ic as needed
     return (
         <div className="flex justify-between items-center h-16 bg-zinc-800 m-2 rounded text-white backdrop:blur-md">
-            <div className="flex gap-2 items-center m-4"><img src="/spotify.png" alt="" className="size-7 rounded-sm" />Music</div>
-            <div className="flex gap-2 items-center m-4">
+            <div className="hidden sm:inline gap-2 items-center m-4"><img src="/spotify.png" alt="" className="hidden sm:inline-block mr-2 size-7 rounded-sm" />
+                Music
+            </div>
+            <div className="flex items-center m-4">
                 {isAdmin && (
                     <div className="flex gap-0 mx-4 items-center hover:bg-zinc-700 hover:text-emerald-400 p-2 rounded-md ">
                         <LayoutDashboardIcon className="size-4 mr-2 " />

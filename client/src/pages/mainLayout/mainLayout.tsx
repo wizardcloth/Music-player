@@ -33,45 +33,57 @@ function mainLayout() {
     loader();
   }, [fetchAlbums, fetchfeaturedSongs, fetchMadeForYou, fetchTrendingSongs, initializeQueue]);
 
+  const [isMobile, setIsMobile] = useState(false);
 
-  const [ismobile, setismobile] = useState(false);
   useEffect(() => {
-    window.addEventListener("resize", () => {
-      setismobile(window.innerWidth < 768);
-    })
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile(); // Initial check
+
+    window.addEventListener("resize", checkMobile);
+
     return () => {
-      window.removeEventListener("resize", () => {
-        setismobile(window.innerWidth < 768);
-      })
-    }
-  })
+      window.removeEventListener("resize", checkMobile);
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log("isMobile", isMobile); // ✅ This will now reflect the current value correctly
+  }, [isMobile]);
+
 
   return (
-
-    <div className="h-screen flex flex-col">
-      <AudioPlayer />
-      <ResizablePanelGroup direction="horizontal" className="p-0 h-full overflow-hidden">
-        <ResizablePanel defaultSize={20} maxSize={30} minSize={ismobile ? 0 : 16}>
+    <div className='h-screen bg-black text-white flex flex-col'>
+      <ResizablePanelGroup direction='horizontal' className='flex-1 flex h-full overflow-hidden p-2'>
+        <AudioPlayer />
+        {/* left sidebar */}
+        <ResizablePanel defaultSize={20} minSize={isMobile ? 0 : 10} maxSize={30}>
           <Leftsidebar />
         </ResizablePanel>
-        <ResizableHandle className="h-[calc(100vh-85px)] w-1" />
-        <ResizablePanel defaultSize={ismobile ? 80 : 60}>
+
+        <ResizableHandle className='w-2 bg-black rounded-lg transition-colors' />
+
+        {/* Main content */}
+        <ResizablePanel defaultSize={isMobile ? 80 : 60}>
           <Outlet />
         </ResizablePanel>
-        {
-          !ismobile && (
-            <>
-              <ResizableHandle className="h-[calc(100vh-85px)] w-1" />
-              <ResizablePanel defaultSize={15} maxSize={25} minSize={0} collapsedSize={0}>
-                <RightBar />
-              </ResizablePanel>
-            </>
-          )
-        }
+
+        {!isMobile && (
+          <>
+            <ResizableHandle className='w-2 bg-black rounded-lg transition-colors' />
+
+            {/* right sidebar */}
+            <ResizablePanel defaultSize={20} minSize={0} maxSize={25} collapsedSize={0}>
+              <RightBar />
+            </ResizablePanel>
+          </>
+        )}
       </ResizablePanelGroup>
+
       <PlayMenu />
     </div>
-  )
+  );
 }
-
-export default mainLayout
+export default mainLayout;
