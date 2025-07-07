@@ -1,4 +1,3 @@
-import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Homepage from "./pages/home/homepage.tsx";
 import AuthCallback from "./pages/authCallback/authCallback.tsx";
